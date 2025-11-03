@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LagFix GamerHub - Fun for All Ages!</title>
+    <title>LagFix GamerHub - HTML5 Games for All Ages</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -12,25 +13,43 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        :root {
+            --primary: #6a11cb;
+            --secondary: #2575fc;
+            --accent: #ff6a00;
+            --light: #ffffff;
+            --dark: #1a1a2e;
+            --success: #4CAF50;
+            --danger: #f44336;
+            --warning: #ff9800;
+        }
+
         body {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            color: white;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--light);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 20px;
+            overflow-x: hidden;
         }
 
         header {
             text-align: center;
             margin-bottom: 30px;
             width: 100%;
-            max-width: 800px;
+            max-width: 1200px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .logo {
-            font-size: 2.8rem;
+            font-size: 3.5rem;
             font-weight: 800;
             margin-bottom: 10px;
             text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.2);
@@ -47,15 +66,121 @@
             opacity: 0.9;
         }
 
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: linear-gradient(45deg, var(--accent), #ff9a00);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .main-container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            gap: 30px;
+        }
+
+        .sidebar {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 300px;
+        }
+
+        .games-grid {
+            flex: 3;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .game-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .game-thumbnail {
+            height: 180px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .game-info {
+            padding: 20px;
+        }
+
+        .game-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+
+        .game-desc {
+            font-size: 0.95rem;
+            opacity: 0.8;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .game-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
         .game-container {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 25px;
             width: 100%;
-            max-width: 800px;
+            max-width: 1200px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.2);
+            display: none;
         }
 
         .game-header {
@@ -96,15 +221,18 @@
         }
 
         button {
-            background: linear-gradient(45deg, #ff9a00, #ff6a00);
+            background: linear-gradient(45deg, var(--accent), #ff9a00);
             border: none;
             color: white;
-            padding: 10px 20px;
+            padding: 12px 25px;
             border-radius: 50px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         button:hover {
@@ -116,50 +244,19 @@
             transform: translateY(1px);
         }
 
-        .game-board {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
+        .back-btn {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .game-area {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            padding: 20px;
             margin-bottom: 20px;
-        }
-
-        @media (min-width: 768px) {
-            .game-board {
-                grid-template-columns: repeat(6, 1fr);
-            }
-        }
-
-        .color-card {
-            aspect-ratio: 1;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            min-height: 400px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: rgba(0, 0, 0, 0.7);
-        }
-
-        .color-card:hover {
-            transform: scale(1.05);
-        }
-
-        .color-card.flipped {
-            transform: rotateY(180deg);
-        }
-
-        .color-card.matched {
-            animation: pulse 0.5s;
-            cursor: default;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
         }
 
         .instructions {
@@ -173,7 +270,7 @@
 
         .instructions h3 {
             margin-bottom: 10px;
-            color: #ff9a00;
+            color: var(--accent);
         }
 
         .game-message {
@@ -181,14 +278,14 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.9);
             padding: 30px;
             border-radius: 15px;
             text-align: center;
             z-index: 100;
             display: none;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            border: 2px solid #ff9a00;
+            border: 2px solid var(--accent);
             max-width: 90%;
             width: 400px;
         }
@@ -196,7 +293,7 @@
         .game-message h2 {
             font-size: 2rem;
             margin-bottom: 15px;
-            color: #ff9a00;
+            color: var(--accent);
         }
 
         .game-message p {
@@ -210,78 +307,383 @@
             font-size: 0.9rem;
             opacity: 0.7;
             width: 100%;
-            max-width: 800px;
+            max-width: 1200px;
+            padding: 20px;
         }
 
-        .difficulty {
+        /* Game-specific styles */
+        #memory-board {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .memory-card {
+            aspect-ratio: 1;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             display: flex;
-            gap: 10px;
             align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .difficulty label {
+            justify-content: center;
+            font-size: 2rem;
             font-weight: bold;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: transparent;
         }
 
-        select {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+        .memory-card.flipped {
+            background: white;
+            color: var(--dark);
+            transform: rotateY(180deg);
+        }
+
+        .memory-card.matched {
+            background: var(--success);
             color: white;
-            padding: 8px 15px;
-            border-radius: 50px;
-            outline: none;
+            cursor: default;
         }
 
-        option {
-            background: #2a2a2a;
+        #snake-game {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            height: 400px;
+            background: var(--dark);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .snake-segment {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--success);
+            border-radius: 4px;
+        }
+
+        .snake-food {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--danger);
+            border-radius: 50%;
+        }
+
+        #bubble-shooter {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            height: 500px;
+            background: var(--dark);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+
+        .shooter {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 50px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        .shooter::after {
+            content: '';
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 30px;
+            background: var(--accent);
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                max-width: 100%;
+            }
+            
+            .games-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .logo {
+                font-size: 2.5rem;
+            }
+            
+            .nav-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .score-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .game-header {
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
     <header>
         <h1 class="logo">LagFix GamerHub</h1>
-        <p class="tagline">Fun games for kids and adults - No lag, just fun!</p>
+        <p class="tagline">HTML5 Games for Kids and Adults - No Downloads, No Lag, Just Fun!</p>
+        <div class="nav-container">
+            <button class="nav-btn active" id="home-btn"><i class="fas fa-home"></i> Home</button>
+            <button class="nav-btn" id="games-btn"><i class="fas fa-gamepad"></i> All Games</button>
+            <button class="nav-btn" id="favorites-btn"><i class="fas fa-star"></i> Favorites</button>
+            <button class="nav-btn" id="new-btn"><i class="fas fa-fire"></i> New Games</button>
+        </div>
     </header>
 
-    <div class="game-container">
+    <div class="main-container" id="home-page">
+        <div class="sidebar">
+            <h2 style="margin-bottom: 20px; color: var(--accent);">Categories</h2>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <button class="nav-btn" style="justify-content: flex-start;"><i class="fas fa-puzzle-piece"></i> Puzzle Games</button>
+                <button class="nav-btn" style="justify-content: flex-start;"><i class="fas fa-brain"></i> Brain Games</button>
+                <button class="nav-btn" style="justify-content: flex-start;"><i class="fas fa-running"></i> Action Games</button>
+                <button class="nav-btn" style="justify-content: flex-start;"><i class="fas fa-chess"></i> Strategy Games</button>
+                <button class="nav-btn" style="justify-content: flex-start;"><i class="fas fa-child"></i> Kids Games</button>
+            </div>
+            
+            <h2 style="margin: 30px 0 15px; color: var(--accent);">Top Players</h2>
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 30px; height: 30px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; font-weight: bold;">1</div>
+                    <div>GameMaster99</div>
+                    <div style="margin-left: auto; font-weight: bold; color: var(--accent);">2,450</div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 30px; height: 30px; border-radius: 50%; background: var(--warning); display: flex; align-items: center; justify-content: center; font-weight: bold;">2</div>
+                    <div>ProPlayer</div>
+                    <div style="margin-left: auto; font-weight: bold; color: var(--warning);">2,120</div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 30px; height: 30px; border-radius: 50%; background: var(--success); display: flex; align-items: center; justify-content: center; font-weight: bold;">3</div>
+                    <div>Champion</div>
+                    <div style="margin-left: auto; font-weight: bold; color: var(--success);">1,980</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="games-grid">
+            <div class="game-card" data-game="memory">
+                <div class="game-thumbnail">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <div class="game-info">
+                    <div class="game-title">Memory Match</div>
+                    <div class="game-desc">Test your memory by matching pairs of cards. Find all matches before time runs out!</div>
+                    <div class="game-stats">
+                        <span><i class="fas fa-play-circle"></i> 12.5K plays</span>
+                        <span><i class="fas fa-star"></i> 4.7</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="game-card" data-game="snake">
+                <div class="game-thumbnail">
+                    <i class="fas fa-strikethrough"></i>
+                </div>
+                <div class="game-info">
+                    <div class="game-title">Snake Adventure</div>
+                    <div class="game-desc">Control the snake, eat food and grow longer without hitting the walls or yourself.</div>
+                    <div class="game-stats">
+                        <span><i class="fas fa-play-circle"></i> 8.3K plays</span>
+                        <span><i class="fas fa-star"></i> 4.5</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="game-card" data-game="bubble">
+                <div class="game-thumbnail">
+                    <i class="fas fa-circle"></i>
+                </div>
+                <div class="game-info">
+                    <div class="game-title">Bubble Shooter</div>
+                    <div class="game-desc">Shoot bubbles to create groups of the same color. Clear the board to win!</div>
+                    <div class="game-stats">
+                        <span><i class="fas fa-play-circle"></i> 10.1K plays</span>
+                        <span><i class="fas fa-star"></i> 4.6</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="game-card">
+                <div class="game-thumbnail">
+                    <i class="fas fa-chess-board"></i>
+                </div>
+                <div class="game-info">
+                    <div class="game-title">Puzzle Blocks</div>
+                    <div class="game-desc">Arrange the blocks to complete the pattern. Challenge your spatial reasoning!</div>
+                    <div class="game-stats">
+                        <span><i class="fas fa-play-circle"></i> 6.7K plays</span>
+                        <span><i class="fas fa-star"></i> 4.4</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="game-card">
+                <div class="game-thumbnail">
+                    <i class="fas fa-car"></i>
+                </div>
+                <div class="game-info">
+                    <div class="game-title">Racing Challenge</div>
+                    <div class="game-desc">Drive your car through traffic, avoid obstacles and collect coins.</div>
+                    <div class="game-stats">
+                        <span><i class="fas fa-play-circle"></i> 9.2K plays</span>
+                        <span><i class="fas fa-star"></i> 4.3</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="game-card">
+                <div class="game-thumbnail">
+                    <i class="fas fa-basketball-ball"></i>
+                </div>
+                <div class="game-info">
+                    <div class="game-title">Basketball Pro</div>
+                    <div class="game-desc">Swipe to shoot hoops and score as many baskets as you can in 60 seconds.</div>
+                    <div class="game-stats">
+                        <span><i class="fas fa-play-circle"></i> 7.8K plays</span>
+                        <span><i class="fas fa-star"></i> 4.5</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Memory Game -->
+    <div class="game-container" id="memory-game">
         <div class="game-header">
             <div class="score-container">
                 <div class="score-box">
                     <div class="score-label">SCORE</div>
-                    <div class="score-value" id="score">0</div>
+                    <div class="score-value" id="memory-score">0</div>
                 </div>
                 <div class="score-box">
                     <div class="score-label">MOVES</div>
-                    <div class="score-value" id="moves">0</div>
+                    <div class="score-value" id="memory-moves">0</div>
                 </div>
                 <div class="score-box">
                     <div class="score-label">TIME</div>
-                    <div class="score-value" id="timer">60</div>
+                    <div class="score-value" id="memory-timer">60</div>
                 </div>
             </div>
             <div class="controls">
-                <button id="start-btn">Start Game</button>
-                <button id="reset-btn">Reset</button>
+                <button id="memory-start"><i class="fas fa-play"></i> Start</button>
+                <button id="memory-reset"><i class="fas fa-redo"></i> Reset</button>
+                <button class="back-btn" id="memory-back"><i class="fas fa-arrow-left"></i> Back</button>
             </div>
         </div>
-
-        <div class="difficulty">
-            <label for="difficulty">Difficulty:</label>
-            <select id="difficulty">
-                <option value="easy">Easy (4x4)</option>
-                <option value="medium" selected>Medium (4x4)</option>
-                <option value="hard">Hard (6x6)</option>
-            </select>
+        
+        <div class="game-area">
+            <div id="memory-board"></div>
         </div>
-
-        <div class="game-board" id="game-board">
-            <!-- Color cards will be generated here -->
-        </div>
-
+        
         <div class="instructions">
-            <h3>How to Play</h3>
-            <p>Click on the cards to reveal colors. Match pairs of the same color to earn points. Complete all matches before time runs out! Each match gives you 10 points, but watch out - wrong matches cost you 5 points!</p>
+            <h3>How to Play Memory Match</h3>
+            <p>Click on cards to flip them and find matching pairs. Each match gives you 10 points. Try to find all pairs before time runs out!</p>
+        </div>
+    </div>
+
+    <!-- Snake Game -->
+    <div class="game-container" id="snake-game-container">
+        <div class="game-header">
+            <div class="score-container">
+                <div class="score-box">
+                    <div class="score-label">SCORE</div>
+                    <div class="score-value" id="snake-score">0</div>
+                </div>
+                <div class="score-box">
+                    <div class="score-label">LENGTH</div>
+                    <div class="score-value" id="snake-length">3</div>
+                </div>
+                <div class="score-box">
+                    <div class="score-label">HIGH SCORE</div>
+                    <div class="score-value" id="snake-highscore">0</div>
+                </div>
+            </div>
+            <div class="controls">
+                <button id="snake-start"><i class="fas fa-play"></i> Start</button>
+                <button id="snake-pause"><i class="fas fa-pause"></i> Pause</button>
+                <button class="back-btn" id="snake-back"><i class="fas fa-arrow-left"></i> Back</button>
+            </div>
+        </div>
+        
+        <div class="game-area">
+            <div id="snake-game"></div>
+        </div>
+        
+        <div class="instructions">
+            <h3>How to Play Snake Adventure</h3>
+            <p>Use arrow keys or swipe to control the snake. Eat the red food to grow longer. Avoid hitting walls or yourself!</p>
+        </div>
+    </div>
+
+    <!-- Bubble Shooter Game -->
+    <div class="game-container" id="bubble-game-container">
+        <div class="game-header">
+            <div class="score-container">
+                <div class="score-box">
+                    <div class="score-label">SCORE</div>
+                    <div class="score-value" id="bubble-score">0</div>
+                </div>
+                <div class="score-box">
+                    <div class="score-label">BUBBLES LEFT</div>
+                    <div class="score-value" id="bubble-count">50</div>
+                </div>
+                <div class="score-box">
+                    <div class="score-label">LEVEL</div>
+                    <div class="score-value" id="bubble-level">1</div>
+                </div>
+            </div>
+            <div class="controls">
+                <button id="bubble-start"><i class="fas fa-play"></i> Start</button>
+                <button id="bubble-reset"><i class="fas fa-redo"></i> Reset</button>
+                <button class="back-btn" id="bubble-back"><i class="fas fa-arrow-left"></i> Back</button>
+            </div>
+        </div>
+        
+        <div class="game-area">
+            <div id="bubble-shooter"></div>
+        </div>
+        
+        <div class="instructions">
+            <h3>How to Play Bubble Shooter</h3>
+            <p>Aim with your mouse or finger and click/tap to shoot bubbles. Create groups of 3 or more same-colored bubbles to pop them. Clear the board to advance to the next level!</p>
         </div>
     </div>
 
@@ -292,229 +694,766 @@
     </div>
 
     <footer>
-        <p>© 2023 LagFix GamerHub - All Rights Reserved. An original game created for fun!</p>
+        <p>© 2023 LagFix GamerHub - All Rights Reserved. Original HTML5 Games Created for Fun!</p>
+        <p style="margin-top: 10px; font-size: 0.8rem;">No Copyright Infringement Intended - All Games Are Original Creations</p>
     </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Game elements
-            const gameBoard = document.getElementById('game-board');
-            const scoreDisplay = document.getElementById('score');
-            const movesDisplay = document.getElementById('moves');
-            const timerDisplay = document.getElementById('timer');
-            const startBtn = document.getElementById('start-btn');
-            const resetBtn = document.getElementById('reset-btn');
-            const playAgainBtn = document.getElementById('play-again');
+            // Page navigation
+            const homePage = document.getElementById('home-page');
+            const memoryGame = document.getElementById('memory-game');
+            const snakeGameContainer = document.getElementById('snake-game-container');
+            const bubbleGameContainer = document.getElementById('bubble-game-container');
             const gameMessage = document.getElementById('game-message');
-            const messageTitle = document.getElementById('message-title');
-            const messageText = document.getElementById('message-text');
-            const finalScore = document.getElementById('final-score');
-            const difficultySelect = document.getElementById('difficulty');
-
-            // Game variables
-            let score = 0;
-            let moves = 0;
-            let timeLeft = 60;
-            let timer;
-            let gameStarted = false;
-            let firstCard = null;
-            let secondCard = null;
-            let lockBoard = false;
-            let matchedPairs = 0;
-            let totalPairs = 0;
-
-            // Color palette for the game
-            const colors = [
-                '#FF5252', '#FF4081', '#E040FB', '#7C4DFF',
-                '#536DFE', '#448AFF', '#40C4FF', '#18FFFF',
-                '#64FFDA', '#69F0AE', '#B2FF59', '#EEFF41',
-                '#FFFF00', '#FFD740', '#FFAB40', '#FF6E40'
-            ];
-
-            // Initialize the game
-            function initGame() {
-                gameBoard.innerHTML = '';
-                score = 0;
-                moves = 0;
-                matchedPairs = 0;
-                scoreDisplay.textContent = score;
-                movesDisplay.textContent = moves;
+            
+            const homeBtn = document.getElementById('home-btn');
+            const gamesBtn = document.getElementById('games-btn');
+            const favoritesBtn = document.getElementById('favorites-btn');
+            const newBtn = document.getElementById('new-btn');
+            
+            const gameCards = document.querySelectorAll('.game-card');
+            const backButtons = document.querySelectorAll('.back-btn');
+            const playAgainBtn = document.getElementById('play-again');
+            
+            // Navigation functions
+            function showPage(page) {
+                homePage.style.display = 'none';
+                memoryGame.style.display = 'none';
+                snakeGameContainer.style.display = 'none';
+                bubbleGameContainer.style.display = 'none';
                 
-                // Set difficulty
-                const difficulty = difficultySelect.value;
-                let gridSize = 4; // Default 4x4
-                
-                if (difficulty === 'easy') {
-                    gridSize = 4;
-                    timeLeft = 90;
-                } else if (difficulty === 'medium') {
-                    gridSize = 4;
-                    timeLeft = 60;
-                } else if (difficulty === 'hard') {
-                    gridSize = 6;
-                    timeLeft = 90;
-                }
-                
-                timerDisplay.textContent = timeLeft;
-                totalPairs = (gridSize * gridSize) / 2;
-                
-                // Set grid template
-                gameBoard.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
-                
-                // Create color pairs based on grid size
-                const gameColors = [];
-                const pairsNeeded = (gridSize * gridSize) / 2;
-                
-                for (let i = 0; i < pairsNeeded; i++) {
-                    const color = colors[i % colors.length];
-                    gameColors.push(color, color);
-                }
-                
-                // Shuffle the colors
-                shuffleArray(gameColors);
-                
-                // Create cards
-                gameColors.forEach(color => {
-                    const card = document.createElement('div');
-                    card.className = 'color-card';
-                    card.dataset.color = color;
-                    card.style.backgroundColor = '#1a1a2e';
+                page.style.display = 'block';
+            }
+            
+            function showHome() {
+                showPage(homePage);
+                setActiveNav(homeBtn);
+            }
+            
+            function setActiveNav(btn) {
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            }
+            
+            // Event listeners for navigation
+            homeBtn.addEventListener('click', showHome);
+            gamesBtn.addEventListener('click', () => setActiveNav(gamesBtn));
+            favoritesBtn.addEventListener('click', () => setActiveNav(favoritesBtn));
+            newBtn.addEventListener('click', () => setActiveNav(newBtn));
+            
+            // Event listeners for game cards
+            gameCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const game = this.getAttribute('data-game');
                     
-                    card.addEventListener('click', flipCard);
-                    gameBoard.appendChild(card);
+                    if (game === 'memory') {
+                        showPage(memoryGame);
+                        initMemoryGame();
+                    } else if (game === 'snake') {
+                        showPage(snakeGameContainer);
+                        initSnakeGame();
+                    } else if (game === 'bubble') {
+                        showPage(bubbleGameContainer);
+                        initBubbleGame();
+                    }
                 });
-                
-                gameStarted = false;
-                clearInterval(timer);
-            }
-
-            // Shuffle array function
-            function shuffleArray(array) {
-                for (let i = array.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [array[i], array[j]] = [array[j], array[i]];
-                }
-                return array;
-            }
-
-            // Flip card function
-            function flipCard() {
-                if (lockBoard) return;
-                if (this === firstCard) return;
-                if (!gameStarted) {
-                    startGame();
-                }
-                
-                this.style.backgroundColor = this.dataset.color;
-                this.classList.add('flipped');
-                
-                if (!firstCard) {
-                    firstCard = this;
-                    return;
-                }
-                
-                secondCard = this;
-                moves++;
-                movesDisplay.textContent = moves;
-                lockBoard = true;
-                
-                checkForMatch();
-            }
-
-            // Check for match
-            function checkForMatch() {
-                const isMatch = firstCard.dataset.color === secondCard.dataset.color;
-                
-                if (isMatch) {
-                    disableCards();
-                    score += 10;
-                    scoreDisplay.textContent = score;
-                    matchedPairs++;
-                    
-                    if (matchedPairs === totalPairs) {
-                        endGame(true);
-                    }
-                } else {
-                    unflipCards();
-                    score = Math.max(0, score - 5);
-                    scoreDisplay.textContent = score;
-                }
-            }
-
-            // Disable matched cards
-            function disableCards() {
-                firstCard.removeEventListener('click', flipCard);
-                secondCard.removeEventListener('click', flipCard);
-                firstCard.classList.add('matched');
-                secondCard.classList.add('matched');
-                
-                resetBoard();
-            }
-
-            // Unflip cards if no match
-            function unflipCards() {
-                setTimeout(() => {
-                    firstCard.style.backgroundColor = '#1a1a2e';
-                    secondCard.style.backgroundColor = '#1a1a2e';
-                    firstCard.classList.remove('flipped');
-                    secondCard.classList.remove('flipped');
-                    
-                    resetBoard();
-                }, 1000);
-            }
-
-            // Reset board after each turn
-            function resetBoard() {
-                [firstCard, secondCard, lockBoard] = [null, null, false];
-            }
-
-            // Start the game timer
-            function startGame() {
-                gameStarted = true;
-                timer = setInterval(() => {
-                    timeLeft--;
-                    timerDisplay.textContent = timeLeft;
-                    
-                    if (timeLeft <= 0) {
-                        endGame(false);
-                    }
-                }, 1000);
-            }
-
-            // End the game
-            function endGame(isWin) {
-                clearInterval(timer);
-                
-                if (isWin) {
-                    messageTitle.textContent = 'Congratulations!';
-                    messageText.textContent = 'You matched all pairs! Final score:';
-                } else {
-                    messageTitle.textContent = 'Time\'s Up!';
-                    messageText.textContent = 'You ran out of time. Final score:';
-                }
-                
-                finalScore.textContent = score;
-                gameMessage.style.display = 'block';
-            }
-
-            // Event listeners
-            startBtn.addEventListener('click', function() {
-                if (!gameStarted) {
-                    startGame();
-                }
             });
-
-            resetBtn.addEventListener('click', initGame);
+            
+            // Event listeners for back buttons
+            backButtons.forEach(btn => {
+                btn.addEventListener('click', showHome);
+            });
             
             playAgainBtn.addEventListener('click', function() {
                 gameMessage.style.display = 'none';
-                initGame();
             });
-
-            difficultySelect.addEventListener('change', initGame);
-
-            // Initialize the game on page load
-            initGame();
+            
+            // Initialize with home page
+            showHome();
+            
+            // Memory Game Implementation
+            function initMemoryGame() {
+                const memoryBoard = document.getElementById('memory-board');
+                const memoryScore = document.getElementById('memory-score');
+                const memoryMoves = document.getElementById('memory-moves');
+                const memoryTimer = document.getElementById('memory-timer');
+                const memoryStart = document.getElementById('memory-start');
+                const memoryReset = document.getElementById('memory-reset');
+                
+                let score = 0;
+                let moves = 0;
+                let timeLeft = 60;
+                let timer;
+                let gameStarted = false;
+                let firstCard = null;
+                let secondCard = null;
+                let lockBoard = false;
+                let matchedPairs = 0;
+                let totalPairs = 8;
+                
+                const symbols = ['🍎', '🍌', '🍒', '🍇', '🍊', '🍓', '🍑', '🥭'];
+                const cards = [...symbols, ...symbols];
+                
+                // Shuffle function
+                function shuffle(array) {
+                    for (let i = array.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [array[i], array[j]] = [array[j], array[i]];
+                    }
+                    return array;
+                }
+                
+                // Initialize game
+                function initGame() {
+                    memoryBoard.innerHTML = '';
+                    score = 0;
+                    moves = 0;
+                    matchedPairs = 0;
+                    timeLeft = 60;
+                    memoryScore.textContent = score;
+                    memoryMoves.textContent = moves;
+                    memoryTimer.textContent = timeLeft;
+                    
+                    const shuffledCards = shuffle([...cards]);
+                    
+                    shuffledCards.forEach(symbol => {
+                        const card = document.createElement('div');
+                        card.className = 'memory-card';
+                        card.textContent = symbol;
+                        card.addEventListener('click', flipCard);
+                        memoryBoard.appendChild(card);
+                    });
+                    
+                    gameStarted = false;
+                    clearInterval(timer);
+                }
+                
+                // Flip card function
+                function flipCard() {
+                    if (lockBoard) return;
+                    if (this === firstCard) return;
+                    if (this.classList.contains('matched')) return;
+                    
+                    if (!gameStarted) {
+                        startGame();
+                    }
+                    
+                    this.classList.add('flipped');
+                    
+                    if (!firstCard) {
+                        firstCard = this;
+                        return;
+                    }
+                    
+                    secondCard = this;
+                    moves++;
+                    memoryMoves.textContent = moves;
+                    lockBoard = true;
+                    
+                    checkForMatch();
+                }
+                
+                // Check for match
+                function checkForMatch() {
+                    const isMatch = firstCard.textContent === secondCard.textContent;
+                    
+                    if (isMatch) {
+                        disableCards();
+                        score += 10;
+                        memoryScore.textContent = score;
+                        matchedPairs++;
+                        
+                        if (matchedPairs === totalPairs) {
+                            endGame(true);
+                        }
+                    } else {
+                        unflipCards();
+                    }
+                }
+                
+                // Disable matched cards
+                function disableCards() {
+                    firstCard.removeEventListener('click', flipCard);
+                    secondCard.removeEventListener('click', flipCard);
+                    firstCard.classList.add('matched');
+                    secondCard.classList.add('matched');
+                    
+                    resetBoard();
+                }
+                
+                // Unflip cards if no match
+                function unflipCards() {
+                    setTimeout(() => {
+                        firstCard.classList.remove('flipped');
+                        secondCard.classList.remove('flipped');
+                        
+                        resetBoard();
+                    }, 1000);
+                }
+                
+                // Reset board after each turn
+                function resetBoard() {
+                    [firstCard, secondCard, lockBoard] = [null, null, false];
+                }
+                
+                // Start the game timer
+                function startGame() {
+                    gameStarted = true;
+                    timer = setInterval(() => {
+                        timeLeft--;
+                        memoryTimer.textContent = timeLeft;
+                        
+                        if (timeLeft <= 0) {
+                            endGame(false);
+                        }
+                    }, 1000);
+                }
+                
+                // End the game
+                function endGame(isWin) {
+                    clearInterval(timer);
+                    
+                    document.getElementById('message-title').textContent = isWin ? 'Congratulations!' : 'Time\'s Up!';
+                    document.getElementById('message-text').textContent = isWin ? 
+                        'You matched all pairs! Final score:' : 'You ran out of time. Final score:';
+                    document.getElementById('final-score').textContent = score;
+                    gameMessage.style.display = 'block';
+                }
+                
+                // Event listeners
+                memoryStart.addEventListener('click', function() {
+                    if (!gameStarted) {
+                        startGame();
+                    }
+                });
+                
+                memoryReset.addEventListener('click', initGame);
+                
+                // Initialize the game
+                initGame();
+            }
+            
+            // Snake Game Implementation
+            function initSnakeGame() {
+                const snakeGame = document.getElementById('snake-game');
+                const snakeScore = document.getElementById('snake-score');
+                const snakeLength = document.getElementById('snake-length');
+                const snakeHighscore = document.getElementById('snake-highscore');
+                const snakeStart = document.getElementById('snake-start');
+                const snakePause = document.getElementById('snake-pause');
+                
+                let score = 0;
+                let highScore = localStorage.getItem('snakeHighScore') || 0;
+                let snake = [{x: 10, y: 10}];
+                let food = {x: 5, y: 5};
+                let direction = 'right';
+                let gameInterval;
+                let gameRunning = false;
+                const gridSize = 20;
+                
+                snakeHighscore.textContent = highScore;
+                
+                // Initialize game
+                function initGame() {
+                    snakeGame.innerHTML = '';
+                    score = 0;
+                    snake = [{x: 10, y: 10}];
+                    direction = 'right';
+                    snakeScore.textContent = score;
+                    snakeLength.textContent = snake.length;
+                    
+                    // Create snake
+                    snake.forEach(segment => {
+                        createSnakeSegment(segment.x, segment.y);
+                    });
+                    
+                    // Create food
+                    createFood();
+                    
+                    gameRunning = false;
+                    clearInterval(gameInterval);
+                }
+                
+                // Create snake segment
+                function createSnakeSegment(x, y) {
+                    const segment = document.createElement('div');
+                    segment.className = 'snake-segment';
+                    segment.style.left = `${x * gridSize}px`;
+                    segment.style.top = `${y * gridSize}px`;
+                    snakeGame.appendChild(segment);
+                }
+                
+                // Create food
+                function createFood() {
+                    // Remove existing food
+                    const existingFood = document.querySelector('.snake-food');
+                    if (existingFood) {
+                        existingFood.remove();
+                    }
+                    
+                    // Create new food at random position
+                    food = {
+                        x: Math.floor(Math.random() * (snakeGame.offsetWidth / gridSize)),
+                        y: Math.floor(Math.random() * (snakeGame.offsetHeight / gridSize))
+                    };
+                    
+                    const foodElement = document.createElement('div');
+                    foodElement.className = 'snake-food';
+                    foodElement.style.left = `${food.x * gridSize}px`;
+                    foodElement.style.top = `${food.y * gridSize}px`;
+                    snakeGame.appendChild(foodElement);
+                }
+                
+                // Move snake
+                function moveSnake() {
+                    const head = {...snake[0]};
+                    
+                    // Update head position based on direction
+                    switch(direction) {
+                        case 'up': head.y--; break;
+                        case 'down': head.y++; break;
+                        case 'left': head.x--; break;
+                        case 'right': head.x++; break;
+                    }
+                    
+                    // Check for collisions with walls
+                    if (head.x < 0 || head.x >= snakeGame.offsetWidth / gridSize || 
+                        head.y < 0 || head.y >= snakeGame.offsetHeight / gridSize) {
+                        gameOver();
+                        return;
+                    }
+                    
+                    // Check for collisions with self
+                    for (let i = 0; i < snake.length; i++) {
+                        if (head.x === snake[i].x && head.y === snake[i].y) {
+                            gameOver();
+                            return;
+                        }
+                    }
+                    
+                    // Add new head
+                    snake.unshift(head);
+                    
+                    // Check for food collision
+                    if (head.x === food.x && head.y === food.y) {
+                        score += 10;
+                        snakeScore.textContent = score;
+                        snakeLength.textContent = snake.length;
+                        createFood();
+                    } else {
+                        // Remove tail if no food eaten
+                        snake.pop();
+                    }
+                    
+                    // Update display
+                    updateDisplay();
+                }
+                
+                // Update display
+                function updateDisplay() {
+                    // Clear snake
+                    const segments = document.querySelectorAll('.snake-segment');
+                    segments.forEach(segment => segment.remove());
+                    
+                    // Create new snake
+                    snake.forEach(segment => {
+                        createSnakeSegment(segment.x, segment.y);
+                    });
+                }
+                
+                // Game over
+                function gameOver() {
+                    clearInterval(gameInterval);
+                    gameRunning = false;
+                    
+                    if (score > highScore) {
+                        highScore = score;
+                        localStorage.setItem('snakeHighScore', highScore);
+                        snakeHighscore.textContent = highScore;
+                    }
+                    
+                    document.getElementById('message-title').textContent = 'Game Over';
+                    document.getElementById('message-text').textContent = `Your snake was ${snake.length} segments long! Final score:`;
+                    document.getElementById('final-score').textContent = score;
+                    gameMessage.style.display = 'block';
+                }
+                
+                // Start game
+                function startGame() {
+                    if (gameRunning) return;
+                    
+                    initGame();
+                    gameRunning = true;
+                    
+                    gameInterval = setInterval(() => {
+                        moveSnake();
+                    }, 150);
+                }
+                
+                // Pause game
+                function pauseGame() {
+                    if (!gameRunning) return;
+                    
+                    clearInterval(gameInterval);
+                    gameRunning = false;
+                }
+                
+                // Keyboard controls
+                document.addEventListener('keydown', (e) => {
+                    if (!gameRunning) return;
+                    
+                    switch(e.key) {
+                        case 'ArrowUp':
+                            if (direction !== 'down') direction = 'up';
+                            break;
+                        case 'ArrowDown':
+                            if (direction !== 'up') direction = 'down';
+                            break;
+                        case 'ArrowLeft':
+                            if (direction !== 'right') direction = 'left';
+                            break;
+                        case 'ArrowRight':
+                            if (direction !== 'left') direction = 'right';
+                            break;
+                    }
+                });
+                
+                // Touch controls for mobile
+                let touchStartX = 0;
+                let touchStartY = 0;
+                
+                document.addEventListener('touchstart', (e) => {
+                    touchStartX = e.touches[0].clientX;
+                    touchStartY = e.touches[0].clientY;
+                });
+                
+                document.addEventListener('touchmove', (e) => {
+                    if (!gameRunning) return;
+                    
+                    e.preventDefault();
+                    const touchEndX = e.touches[0].clientX;
+                    const touchEndY = e.touches[0].clientY;
+                    
+                    const diffX = touchStartX - touchEndX;
+                    const diffY = touchStartY - touchEndY;
+                    
+                    if (Math.abs(diffX) > Math.abs(diffY)) {
+                        // Horizontal swipe
+                        if (diffX > 0 && direction !== 'right') {
+                            direction = 'left';
+                        } else if (diffX < 0 && direction !== 'left') {
+                            direction = 'right';
+                        }
+                    } else {
+                        // Vertical swipe
+                        if (diffY > 0 && direction !== 'down') {
+                            direction = 'up';
+                        } else if (diffY < 0 && direction !== 'up') {
+                            direction = 'down';
+                        }
+                    }
+                });
+                
+                // Event listeners
+                snakeStart.addEventListener('click', startGame);
+                snakePause.addEventListener('click', pauseGame);
+                
+                // Initialize the game
+                initGame();
+            }
+            
+            // Bubble Shooter Game Implementation
+            function initBubbleGame() {
+                const bubbleShooter = document.getElementById('bubble-shooter');
+                const bubbleScore = document.getElementById('bubble-score');
+                const bubbleCount = document.getElementById('bubble-count');
+                const bubbleLevel = document.getElementById('bubble-level');
+                const bubbleStart = document.getElementById('bubble-start');
+                const bubbleReset = document.getElementById('bubble-reset');
+                
+                let score = 0;
+                let bubblesLeft = 50;
+                let level = 1;
+                let bubbles = [];
+                let currentBubble = null;
+                let gameRunning = false;
+                
+                const colors = ['#FF5252', '#FF4081', '#E040FB', '#7C4DFF', '#536DFE', '#448AFF'];
+                
+                // Initialize game
+                function initGame() {
+                    bubbleShooter.innerHTML = '';
+                    score = 0;
+                    bubblesLeft = 50;
+                    level = 1;
+                    bubbles = [];
+                    
+                    bubbleScore.textContent = score;
+                    bubbleCount.textContent = bubblesLeft;
+                    bubbleLevel.textContent = level;
+                    
+                    // Create shooter
+                    const shooter = document.createElement('div');
+                    shooter.className = 'shooter';
+                    bubbleShooter.appendChild(shooter);
+                    
+                    // Create initial bubbles
+                    createBubbleGrid();
+                    
+                    // Create current bubble
+                    createCurrentBubble();
+                    
+                    gameRunning = false;
+                }
+                
+                // Create bubble grid
+                function createBubbleGrid() {
+                    const rows = 5;
+                    const cols = 8;
+                    
+                    for (let row = 0; row < rows; row++) {
+                        for (let col = 0; col < cols; col++) {
+                            if (Math.random() > 0.3) { // 70% chance to create a bubble
+                                const bubble = {
+                                    x: col * 50 + 25,
+                                    y: row * 50 + 25,
+                                    color: colors[Math.floor(Math.random() * colors.length)],
+                                    element: null
+                                };
+                                
+                                bubbles.push(bubble);
+                                createBubbleElement(bubble);
+                            }
+                        }
+                    }
+                }
+                
+                // Create bubble element
+                function createBubbleElement(bubble) {
+                    const element = document.createElement('div');
+                    element.className = 'bubble';
+                    element.style.left = `${bubble.x}px`;
+                    element.style.top = `${bubble.y}px`;
+                    element.style.backgroundColor = bubble.color;
+                    element.style.width = '40px';
+                    element.style.height = '40px';
+                    
+                    bubbleShooter.appendChild(element);
+                    bubble.element = element;
+                }
+                
+                // Create current bubble
+                function createCurrentBubble() {
+                    if (currentBubble && currentBubble.element) {
+                        currentBubble.element.remove();
+                    }
+                    
+                    currentBubble = {
+                        x: bubbleShooter.offsetWidth / 2 - 20,
+                        y: bubbleShooter.offsetHeight - 60,
+                        color: colors[Math.floor(Math.random() * colors.length)],
+                        element: null
+                    };
+                    
+                    const element = document.createElement('div');
+                    element.className = 'bubble';
+                    element.style.left = `${currentBubble.x}px`;
+                    element.style.top = `${currentBubble.y}px`;
+                    element.style.backgroundColor = currentBubble.color;
+                    element.style.width = '40px';
+                    element.style.height = '40px';
+                    
+                    bubbleShooter.appendChild(element);
+                    currentBubble.element = element;
+                }
+                
+                // Shoot bubble
+                function shootBubble(angle) {
+                    if (!gameRunning || bubblesLeft <= 0) return;
+                    
+                    bubblesLeft--;
+                    bubbleCount.textContent = bubblesLeft;
+                    
+                    // Animate bubble
+                    const radians = angle * Math.PI / 180;
+                    const speed = 5;
+                    let x = currentBubble.x;
+                    let y = currentBubble.y;
+                    
+                    const animation = setInterval(() => {
+                        x += Math.cos(radians) * speed;
+                        y -= Math.sin(radians) * speed;
+                        
+                        currentBubble.element.style.left = `${x}px`;
+                        currentBubble.element.style.top = `${y}px`;
+                        
+                        // Check for collisions with walls
+                        if (x <= 0 || x >= bubbleShooter.offsetWidth - 40) {
+                            // Bounce off walls
+                            clearInterval(animation);
+                            attachBubble(x, y);
+                        }
+                        
+                        // Check for collisions with other bubbles
+                        for (let i = 0; i < bubbles.length; i++) {
+                            const bubble = bubbles[i];
+                            const dx = x - bubble.x;
+                            const dy = y - bubble.y;
+                            const distance = Math.sqrt(dx * dx + dy * dy);
+                            
+                            if (distance < 40) {
+                                clearInterval(animation);
+                                attachBubble(x, y);
+                                break;
+                            }
+                        }
+                        
+                        // Check if bubble goes off top
+                        if (y <= 0) {
+                            clearInterval(animation);
+                            attachBubble(x, y);
+                        }
+                    }, 16);
+                    
+                    // Create new current bubble
+                    setTimeout(() => {
+                        createCurrentBubble();
+                        checkForMatches();
+                    }, 500);
+                }
+                
+                // Attach bubble to grid
+                function attachBubble(x, y) {
+                    // Find the closest grid position
+                    const gridX = Math.round((x - 25) / 50) * 50 + 25;
+                    const gridY = Math.round((y - 25) / 50) * 50 + 25;
+                    
+                    const newBubble = {
+                        x: gridX,
+                        y: gridY,
+                        color: currentBubble.color,
+                        element: currentBubble.element
+                    };
+                    
+                    bubbles.push(newBubble);
+                    
+                    // Position the bubble exactly on the grid
+                    newBubble.element.style.left = `${gridX}px`;
+                    newBubble.element.style.top = `${gridY}px`;
+                }
+                
+                // Check for matches
+                function checkForMatches() {
+                    // Simple match-3 logic
+                    const colorGroups = {};
+                    
+                    bubbles.forEach(bubble => {
+                        if (!colorGroups[bubble.color]) {
+                            colorGroups[bubble.color] = [];
+                        }
+                        colorGroups[bubble.color].push(bubble);
+                    });
+                    
+                    let matched = false;
+                    
+                    for (const color in colorGroups) {
+                        if (colorGroups[color].length >= 3) {
+                            matched = true;
+                            score += colorGroups[color].length * 10;
+                            bubbleScore.textContent = score;
+                            
+                            // Remove matched bubbles
+                            colorGroups[color].forEach(bubble => {
+                                const index = bubbles.indexOf(bubble);
+                                if (index > -1) {
+                                    bubbles.splice(index, 1);
+                                    bubble.element.remove();
+                                }
+                            });
+                        }
+                    }
+                    
+                    // Check for win condition
+                    if (bubbles.length === 0) {
+                        levelUp();
+                    }
+                    
+                    // Check for game over
+                    if (bubblesLeft <= 0 && !matched) {
+                        gameOver();
+                    }
+                }
+                
+                // Level up
+                function levelUp() {
+                    level++;
+                    bubbleLevel.textContent = level;
+                    bubblesLeft = 50;
+                    bubbleCount.textContent = bubblesLeft;
+                    
+                    // Create new bubble grid
+                    createBubbleGrid();
+                }
+                
+                // Game over
+                function gameOver() {
+                    gameRunning = false;
+                    
+                    document.getElementById('message-title').textContent = 'Game Over';
+                    document.getElementById('message-text').textContent = `You reached level ${level}! Final score:`;
+                    document.getElementById('final-score').textContent = score;
+                    gameMessage.style.display = 'block';
+                }
+                
+                // Start game
+                function startGame() {
+                    if (gameRunning) return;
+                    
+                    gameRunning = true;
+                }
+                
+                // Mouse controls
+                bubbleShooter.addEventListener('click', (e) => {
+                    if (!gameRunning) return;
+                    
+                    const rect = bubbleShooter.getBoundingClientRect();
+                    const clickX = e.clientX - rect.left;
+                    const clickY = e.clientY - rect.top;
+                    
+                    const angle = Math.atan2(
+                        currentBubble.y - clickY,
+                        clickX - currentBubble.x
+                    ) * 180 / Math.PI;
+                    
+                    shootBubble(angle);
+                });
+                
+                // Touch controls for mobile
+                bubbleShooter.addEventListener('touchstart', (e) => {
+                    if (!gameRunning) return;
+                    
+                    e.preventDefault();
+                    const rect = bubbleShooter.getBoundingClientRect();
+                    const touch = e.touches[0];
+                    const touchX = touch.clientX - rect.left;
+                    const touchY = touch.clientY - rect.top;
+                    
+                    const angle = Math.atan2(
+                        currentBubble.y - touchY,
+                        touchX - currentBubble.x
+                    ) * 180 / Math.PI;
+                    
+                    shootBubble(angle);
+                });
+                
+                // Event listeners
+                bubbleStart.addEventListener('click', startGame);
+                bubbleReset.addEventListener('click', initGame);
+                
+                // Initialize the game
+                initGame();
+            }
         });
     </script>
 </body>
