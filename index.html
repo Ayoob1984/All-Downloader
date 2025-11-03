@@ -653,40 +653,6 @@
         </div>
     </div>
 
-    <!-- Bubble Shooter Game -->
-    <div class="game-container" id="bubble-game-container">
-        <div class="game-header">
-            <div class="score-container">
-                <div class="score-box">
-                    <div class="score-label">SCORE</div>
-                    <div class="score-value" id="bubble-score">0</div>
-                </div>
-                <div class="score-box">
-                    <div class="score-label">BUBBLES LEFT</div>
-                    <div class="score-value" id="bubble-count">50</div>
-                </div>
-                <div class="score-box">
-                    <div class="score-label">LEVEL</div>
-                    <div class="score-value" id="bubble-level">1</div>
-                </div>
-            </div>
-            <div class="controls">
-                <button id="bubble-start"><i class="fas fa-play"></i> Start</button>
-                <button id="bubble-reset"><i class="fas fa-redo"></i> Reset</button>
-                <button class="back-btn" id="bubble-back"><i class="fas fa-arrow-left"></i> Back</button>
-            </div>
-        </div>
-        
-        <div class="game-area">
-            <div id="bubble-shooter"></div>
-        </div>
-        
-        <div class="instructions">
-            <h3>How to Play Bubble Shooter</h3>
-            <p>Aim with your mouse or finger and click/tap to shoot bubbles. Create groups of 3 or more same-colored bubbles to pop them. Clear the board to advance to the next level!</p>
-        </div>
-    </div>
-
     <div class="game-message" id="game-message">
         <h2 id="message-title">Game Over</h2>
         <p id="message-text">Your final score is <span id="final-score">0</span></p>
@@ -704,7 +670,6 @@
             const homePage = document.getElementById('home-page');
             const memoryGame = document.getElementById('memory-game');
             const snakeGameContainer = document.getElementById('snake-game-container');
-            const bubbleGameContainer = document.getElementById('bubble-game-container');
             const gameMessage = document.getElementById('game-message');
             
             const homeBtn = document.getElementById('home-btn');
@@ -721,7 +686,6 @@
                 homePage.style.display = 'none';
                 memoryGame.style.display = 'none';
                 snakeGameContainer.style.display = 'none';
-                bubbleGameContainer.style.display = 'none';
                 
                 page.style.display = 'block';
             }
@@ -753,9 +717,6 @@
                     } else if (game === 'snake') {
                         showPage(snakeGameContainer);
                         initSnakeGame();
-                    } else if (game === 'bubble') {
-                        showPage(bubbleGameContainer);
-                        initBubbleGame();
                     }
                 });
             });
@@ -767,6 +728,7 @@
             
             playAgainBtn.addEventListener('click', function() {
                 gameMessage.style.display = 'none';
+                showHome();
             });
             
             // Initialize with home page
@@ -1158,298 +1120,6 @@
                 // Event listeners
                 snakeStart.addEventListener('click', startGame);
                 snakePause.addEventListener('click', pauseGame);
-                
-                // Initialize the game
-                initGame();
-            }
-            
-            // Bubble Shooter Game Implementation
-            function initBubbleGame() {
-                const bubbleShooter = document.getElementById('bubble-shooter');
-                const bubbleScore = document.getElementById('bubble-score');
-                const bubbleCount = document.getElementById('bubble-count');
-                const bubbleLevel = document.getElementById('bubble-level');
-                const bubbleStart = document.getElementById('bubble-start');
-                const bubbleReset = document.getElementById('bubble-reset');
-                
-                let score = 0;
-                let bubblesLeft = 50;
-                let level = 1;
-                let bubbles = [];
-                let currentBubble = null;
-                let gameRunning = false;
-                
-                const colors = ['#FF5252', '#FF4081', '#E040FB', '#7C4DFF', '#536DFE', '#448AFF'];
-                
-                // Initialize game
-                function initGame() {
-                    bubbleShooter.innerHTML = '';
-                    score = 0;
-                    bubblesLeft = 50;
-                    level = 1;
-                    bubbles = [];
-                    
-                    bubbleScore.textContent = score;
-                    bubbleCount.textContent = bubblesLeft;
-                    bubbleLevel.textContent = level;
-                    
-                    // Create shooter
-                    const shooter = document.createElement('div');
-                    shooter.className = 'shooter';
-                    bubbleShooter.appendChild(shooter);
-                    
-                    // Create initial bubbles
-                    createBubbleGrid();
-                    
-                    // Create current bubble
-                    createCurrentBubble();
-                    
-                    gameRunning = false;
-                }
-                
-                // Create bubble grid
-                function createBubbleGrid() {
-                    const rows = 5;
-                    const cols = 8;
-                    
-                    for (let row = 0; row < rows; row++) {
-                        for (let col = 0; col < cols; col++) {
-                            if (Math.random() > 0.3) { // 70% chance to create a bubble
-                                const bubble = {
-                                    x: col * 50 + 25,
-                                    y: row * 50 + 25,
-                                    color: colors[Math.floor(Math.random() * colors.length)],
-                                    element: null
-                                };
-                                
-                                bubbles.push(bubble);
-                                createBubbleElement(bubble);
-                            }
-                        }
-                    }
-                }
-                
-                // Create bubble element
-                function createBubbleElement(bubble) {
-                    const element = document.createElement('div');
-                    element.className = 'bubble';
-                    element.style.left = `${bubble.x}px`;
-                    element.style.top = `${bubble.y}px`;
-                    element.style.backgroundColor = bubble.color;
-                    element.style.width = '40px';
-                    element.style.height = '40px';
-                    
-                    bubbleShooter.appendChild(element);
-                    bubble.element = element;
-                }
-                
-                // Create current bubble
-                function createCurrentBubble() {
-                    if (currentBubble && currentBubble.element) {
-                        currentBubble.element.remove();
-                    }
-                    
-                    currentBubble = {
-                        x: bubbleShooter.offsetWidth / 2 - 20,
-                        y: bubbleShooter.offsetHeight - 60,
-                        color: colors[Math.floor(Math.random() * colors.length)],
-                        element: null
-                    };
-                    
-                    const element = document.createElement('div');
-                    element.className = 'bubble';
-                    element.style.left = `${currentBubble.x}px`;
-                    element.style.top = `${currentBubble.y}px`;
-                    element.style.backgroundColor = currentBubble.color;
-                    element.style.width = '40px';
-                    element.style.height = '40px';
-                    
-                    bubbleShooter.appendChild(element);
-                    currentBubble.element = element;
-                }
-                
-                // Shoot bubble
-                function shootBubble(angle) {
-                    if (!gameRunning || bubblesLeft <= 0) return;
-                    
-                    bubblesLeft--;
-                    bubbleCount.textContent = bubblesLeft;
-                    
-                    // Animate bubble
-                    const radians = angle * Math.PI / 180;
-                    const speed = 5;
-                    let x = currentBubble.x;
-                    let y = currentBubble.y;
-                    
-                    const animation = setInterval(() => {
-                        x += Math.cos(radians) * speed;
-                        y -= Math.sin(radians) * speed;
-                        
-                        currentBubble.element.style.left = `${x}px`;
-                        currentBubble.element.style.top = `${y}px`;
-                        
-                        // Check for collisions with walls
-                        if (x <= 0 || x >= bubbleShooter.offsetWidth - 40) {
-                            // Bounce off walls
-                            clearInterval(animation);
-                            attachBubble(x, y);
-                        }
-                        
-                        // Check for collisions with other bubbles
-                        for (let i = 0; i < bubbles.length; i++) {
-                            const bubble = bubbles[i];
-                            const dx = x - bubble.x;
-                            const dy = y - bubble.y;
-                            const distance = Math.sqrt(dx * dx + dy * dy);
-                            
-                            if (distance < 40) {
-                                clearInterval(animation);
-                                attachBubble(x, y);
-                                break;
-                            }
-                        }
-                        
-                        // Check if bubble goes off top
-                        if (y <= 0) {
-                            clearInterval(animation);
-                            attachBubble(x, y);
-                        }
-                    }, 16);
-                    
-                    // Create new current bubble
-                    setTimeout(() => {
-                        createCurrentBubble();
-                        checkForMatches();
-                    }, 500);
-                }
-                
-                // Attach bubble to grid
-                function attachBubble(x, y) {
-                    // Find the closest grid position
-                    const gridX = Math.round((x - 25) / 50) * 50 + 25;
-                    const gridY = Math.round((y - 25) / 50) * 50 + 25;
-                    
-                    const newBubble = {
-                        x: gridX,
-                        y: gridY,
-                        color: currentBubble.color,
-                        element: currentBubble.element
-                    };
-                    
-                    bubbles.push(newBubble);
-                    
-                    // Position the bubble exactly on the grid
-                    newBubble.element.style.left = `${gridX}px`;
-                    newBubble.element.style.top = `${gridY}px`;
-                }
-                
-                // Check for matches
-                function checkForMatches() {
-                    // Simple match-3 logic
-                    const colorGroups = {};
-                    
-                    bubbles.forEach(bubble => {
-                        if (!colorGroups[bubble.color]) {
-                            colorGroups[bubble.color] = [];
-                        }
-                        colorGroups[bubble.color].push(bubble);
-                    });
-                    
-                    let matched = false;
-                    
-                    for (const color in colorGroups) {
-                        if (colorGroups[color].length >= 3) {
-                            matched = true;
-                            score += colorGroups[color].length * 10;
-                            bubbleScore.textContent = score;
-                            
-                            // Remove matched bubbles
-                            colorGroups[color].forEach(bubble => {
-                                const index = bubbles.indexOf(bubble);
-                                if (index > -1) {
-                                    bubbles.splice(index, 1);
-                                    bubble.element.remove();
-                                }
-                            });
-                        }
-                    }
-                    
-                    // Check for win condition
-                    if (bubbles.length === 0) {
-                        levelUp();
-                    }
-                    
-                    // Check for game over
-                    if (bubblesLeft <= 0 && !matched) {
-                        gameOver();
-                    }
-                }
-                
-                // Level up
-                function levelUp() {
-                    level++;
-                    bubbleLevel.textContent = level;
-                    bubblesLeft = 50;
-                    bubbleCount.textContent = bubblesLeft;
-                    
-                    // Create new bubble grid
-                    createBubbleGrid();
-                }
-                
-                // Game over
-                function gameOver() {
-                    gameRunning = false;
-                    
-                    document.getElementById('message-title').textContent = 'Game Over';
-                    document.getElementById('message-text').textContent = `You reached level ${level}! Final score:`;
-                    document.getElementById('final-score').textContent = score;
-                    gameMessage.style.display = 'block';
-                }
-                
-                // Start game
-                function startGame() {
-                    if (gameRunning) return;
-                    
-                    gameRunning = true;
-                }
-                
-                // Mouse controls
-                bubbleShooter.addEventListener('click', (e) => {
-                    if (!gameRunning) return;
-                    
-                    const rect = bubbleShooter.getBoundingClientRect();
-                    const clickX = e.clientX - rect.left;
-                    const clickY = e.clientY - rect.top;
-                    
-                    const angle = Math.atan2(
-                        currentBubble.y - clickY,
-                        clickX - currentBubble.x
-                    ) * 180 / Math.PI;
-                    
-                    shootBubble(angle);
-                });
-                
-                // Touch controls for mobile
-                bubbleShooter.addEventListener('touchstart', (e) => {
-                    if (!gameRunning) return;
-                    
-                    e.preventDefault();
-                    const rect = bubbleShooter.getBoundingClientRect();
-                    const touch = e.touches[0];
-                    const touchX = touch.clientX - rect.left;
-                    const touchY = touch.clientY - rect.top;
-                    
-                    const angle = Math.atan2(
-                        currentBubble.y - touchY,
-                        touchX - currentBubble.x
-                    ) * 180 / Math.PI;
-                    
-                    shootBubble(angle);
-                });
-                
-                // Event listeners
-                bubbleStart.addEventListener('click', startGame);
-                bubbleReset.addEventListener('click', initGame);
                 
                 // Initialize the game
                 initGame();
