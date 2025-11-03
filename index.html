@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Downloader - Download Videos from YouTube, Instagram, LinkedIn & More</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Global Styles */
         :root {
@@ -299,4 +300,504 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0
+            margin: 0 auto 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .step h3 {
+            margin-bottom: 15px;
+        }
+        
+        /* Supported Platforms */
+        .platforms {
+            background: white;
+            padding: 50px 0;
+        }
+        
+        .platforms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 30px;
+        }
+        
+        .platform-item {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .platform-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+        
+        .platform-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .youtube { color: #FF0000; }
+        .instagram { color: #E4405F; }
+        .linkedin { color: #0A66C2; }
+        .facebook { color: #1877F2; }
+        .twitter { color: #1DA1F2; }
+        .tiktok { color: #000000; }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: #adb5bd;
+        }
+        
+        .footer-column a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #495057;
+            color: #adb5bd;
+        }
+        
+        /* Download Results */
+        .download-results {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin-top: 30px;
+        }
+        
+        .download-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .download-option {
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .download-option:hover {
+            border-color: var(--primary);
+            background: rgba(67, 97, 238, 0.05);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .platform-selector {
+                flex-direction: column;
+            }
+            
+            .steps {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <h1>All<span>Downloader</span></h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#platforms">Supported Platforms</a></li>
+                    <li><a href="#" class="btn">Download Now</a></li>
+                </ul>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Download Videos from Any Platform</h1>
+                <p>Fast, free, and easy-to-use video downloader for YouTube, Instagram, LinkedIn, Facebook, Twitter, TikTok and more.</p>
+                
+                <div class="download-form">
+                    <div class="form-group">
+                        <label for="video-url">Paste Video URL</label>
+                        <input type="text" id="video-url" class="url-input" placeholder="https://www.youtube.com/watch?v=..." value="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+                    </div>
+                    
+                    <div class="platform-selector">
+                        <div class="platform-btn active" data-platform="youtube">
+                            <i class="fab fa-youtube youtube"></i>
+                            <span>YouTube</span>
+                        </div>
+                        <div class="platform-btn" data-platform="instagram">
+                            <i class="fab fa-instagram instagram"></i>
+                            <span>Instagram</span>
+                        </div>
+                        <div class="platform-btn" data-platform="linkedin">
+                            <i class="fab fa-linkedin linkedin"></i>
+                            <span>LinkedIn</span>
+                        </div>
+                        <div class="platform-btn" data-platform="facebook">
+                            <i class="fab fa-facebook facebook"></i>
+                            <span>Facebook</span>
+                        </div>
+                        <div class="platform-btn" data-platform="twitter">
+                            <i class="fab fa-twitter twitter"></i>
+                            <span>Twitter</span>
+                        </div>
+                        <div class="platform-btn" data-platform="tiktok">
+                            <i class="fab fa-tiktok tiktok"></i>
+                            <span>TikTok</span>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-accent" id="download-btn" style="width: 100%;">
+                        <i class="fas fa-download"></i> Download Video
+                    </button>
+                </div>
+                
+                <div class="download-results" id="download-results">
+                    <h3>Download Options</h3>
+                    <p>Select your preferred video quality and format:</p>
+                    
+                    <div class="download-options">
+                        <div class="download-option">
+                            <h4>MP4 - 1080p</h4>
+                            <p>High Quality</p>
+                            <button class="btn" style="margin-top: 10px;">Download</button>
+                        </div>
+                        <div class="download-option">
+                            <h4>MP4 - 720p</h4>
+                            <p>Medium Quality</p>
+                            <button class="btn" style="margin-top: 10px;">Download</button>
+                        </div>
+                        <div class="download-option">
+                            <h4>MP4 - 480p</h4>
+                            <p>Standard Quality</p>
+                            <button class="btn" style="margin-top: 10px;">Download</button>
+                        </div>
+                        <div class="download-option">
+                            <h4>MP3</h4>
+                            <p>Audio Only</p>
+                            <button class="btn" style="margin-top: 10px;">Download</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why Choose All Downloader?</h2>
+                <p>Our platform offers the best downloading experience with these amazing features</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Fast Downloads</h3>
+                    <p>Download videos at the highest possible speed with our optimized servers.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Safe & Secure</h3>
+                    <p>No registration required. We don't store your data or downloaded content.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-desktop"></i>
+                    </div>
+                    <h3>Multiple Formats</h3>
+                    <p>Download in MP4, WebM, 3GP, and MP3 formats with various quality options.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Mobile Friendly</h3>
+                    <p>Works perfectly on all devices - smartphones, tablets, and desktops.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-infinity"></i>
+                    </div>
+                    <h3>Unlimited Downloads</h3>
+                    <p>No limits on the number of videos you can download. Completely free!</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cloud-download-alt"></i>
+                    </div>
+                    <h3>No Software Required</h3>
+                    <p>Works directly in your browser. No need to install any applications.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="section" id="how-it-works" style="background: white;">
+        <div class="container">
+            <div class="section-title">
+                <h2>How It Works</h2>
+                <p>Downloading videos has never been easier. Just follow these simple steps</p>
+            </div>
+            
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Copy Video URL</h3>
+                    <p>Go to your favorite platform and copy the video URL from the address bar.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Paste URL</h3>
+                    <p>Paste the copied URL into the input field on our website.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Select Format</h3>
+                    <p>Choose your preferred video quality and format.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Download</h3>
+                    <p>Click the download button and save your video to your device.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Supported Platforms Section -->
+    <section class="section platforms" id="platforms">
+        <div class="container">
+            <div class="section-title">
+                <h2>Supported Platforms</h2>
+                <p>We support downloading from all major social media and video platforms</p>
+            </div>
+            
+            <div class="platforms-grid">
+                <div class="platform-item">
+                    <i class="fab fa-youtube platform-icon youtube"></i>
+                    <h3>YouTube</h3>
+                </div>
+                
+                <div class="platform-item">
+                    <i class="fab fa-instagram platform-icon instagram"></i>
+                    <h3>Instagram</h3>
+                </div>
+                
+                <div class="platform-item">
+                    <i class="fab fa-linkedin platform-icon linkedin"></i>
+                    <h3>LinkedIn</h3>
+                </div>
+                
+                <div class="platform-item">
+                    <i class="fab fa-facebook platform-icon facebook"></i>
+                    <h3>Facebook</h3>
+                </div>
+                
+                <div class="platform-item">
+                    <i class="fab fa-twitter platform-icon twitter"></i>
+                    <h3>Twitter</h3>
+                </div>
+                
+                <div class="platform-item">
+                    <i class="fab fa-tiktok platform-icon tiktok"></i>
+                    <h3>TikTok</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>All Downloader</h3>
+                    <p>The fastest and most reliable video downloader for all major platforms. Free, secure, and easy to use.</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#platforms">Supported Platforms</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">DMCA</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Follow Us</h3>
+                    <ul>
+                        <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                        <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                        <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 All Downloader. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Platform Selection
+        const platformButtons = document.querySelectorAll('.platform-btn');
+        platformButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                platformButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                // Update placeholder based on selected platform
+                const platform = button.getAttribute('data-platform');
+                const urlInput = document.getElementById('video-url');
+                
+                switch(platform) {
+                    case 'youtube':
+                        urlInput.placeholder = 'https://www.youtube.com/watch?v=...';
+                        break;
+                    case 'instagram':
+                        urlInput.placeholder = 'https://www.instagram.com/p/...';
+                        break;
+                    case 'linkedin':
+                        urlInput.placeholder = 'https://www.linkedin.com/posts/...';
+                        break;
+                    case 'facebook':
+                        urlInput.placeholder = 'https://www.facebook.com/watch/?v=...';
+                        break;
+                    case 'twitter':
+                        urlInput.placeholder = 'https://twitter.com/.../status/...';
+                        break;
+                    case 'tiktok':
+                        urlInput.placeholder = 'https://www.tiktok.com/@.../video/...';
+                        break;
+                }
+            });
+        });
+        
+        // Download Button Functionality
+        const downloadBtn = document.getElementById('download-btn');
+        const downloadResults = document.getElementById('download-results');
+        
+        downloadBtn.addEventListener('click', () => {
+            const urlInput = document.getElementById('video-url');
+            const url = urlInput.value.trim();
+            
+            if (!url) {
+                alert('Please enter a valid URL');
+                return;
+            }
+            
+            // Show loading state
+            downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            downloadBtn.disabled = true;
+            
+            // Simulate processing time
+            setTimeout(() => {
+                downloadBtn.innerHTML = '<i class="fas fa-download"></i> Download Video';
+                downloadBtn.disabled = false;
+                
+                // Show download options
+                downloadResults.style.display = 'block';
+                
+                // Scroll to results
+                downloadResults.scrollIntoView({ behavior: 'smooth' });
+            }, 2000);
+        });
+        
+        // Mobile Menu Toggle
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenu.addEventListener('click', () => {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        });
+        
+        // Update year in copyright
+        document.querySelector('.copyright p').innerHTML = `&copy; ${new Date().getFullYear()} All Downloader. All rights reserved.`;
+    </script>
+</body>
+</html>
