@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Downloader - Download Videos from YouTube, Instagram, LinkedIn & More</title>
+    <title>All Downloader - Download YouTube Videos for Free</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Global Styles */
@@ -74,6 +74,14 @@
         
         .btn-accent:hover {
             background-color: #d9046d;
+        }
+        
+        .btn-success {
+            background-color: #28a745;
+        }
+        
+        .btn-success:hover {
+            background-color: #218838;
         }
         
         .section {
@@ -417,10 +425,47 @@
             background: rgba(67, 97, 238, 0.05);
         }
         
+        /* Video Preview */
+        .video-preview {
+            display: none;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .video-preview img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+        
+        .video-info {
+            margin-top: 15px;
+        }
+        
+        .video-info h3 {
+            margin-bottom: 10px;
+        }
+        
         /* Responsive Design */
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: var(--shadow);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li {
+                margin: 10px 0;
             }
             
             .mobile-menu {
@@ -467,12 +512,12 @@
     <section class="hero" id="home">
         <div class="container">
             <div class="hero-content">
-                <h1>Download Videos from Any Platform</h1>
-                <p>Fast, free, and easy-to-use video downloader for YouTube, Instagram, LinkedIn, Facebook, Twitter, TikTok and more.</p>
+                <h1>Download YouTube Videos for Free</h1>
+                <p>Fast, free, and easy-to-use YouTube video downloader. Save videos in MP4, MP3, and other formats.</p>
                 
                 <div class="download-form">
                     <div class="form-group">
-                        <label for="video-url">Paste Video URL</label>
+                        <label for="video-url">Paste YouTube Video URL</label>
                         <input type="text" id="video-url" class="url-input" placeholder="https://www.youtube.com/watch?v=..." value="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
                     </div>
                     
@@ -489,23 +534,19 @@
                             <i class="fab fa-linkedin linkedin"></i>
                             <span>LinkedIn</span>
                         </div>
-                        <div class="platform-btn" data-platform="facebook">
-                            <i class="fab fa-facebook facebook"></i>
-                            <span>Facebook</span>
-                        </div>
-                        <div class="platform-btn" data-platform="twitter">
-                            <i class="fab fa-twitter twitter"></i>
-                            <span>Twitter</span>
-                        </div>
-                        <div class="platform-btn" data-platform="tiktok">
-                            <i class="fab fa-tiktok tiktok"></i>
-                            <span>TikTok</span>
-                        </div>
                     </div>
                     
                     <button class="btn btn-accent" id="download-btn" style="width: 100%;">
                         <i class="fas fa-download"></i> Download Video
                     </button>
+                </div>
+                
+                <div class="video-preview" id="video-preview">
+                    <img id="video-thumbnail" src="" alt="Video Thumbnail">
+                    <div class="video-info">
+                        <h3 id="video-title">Video Title</h3>
+                        <p id="video-duration">Duration: 0:00</p>
+                    </div>
                 </div>
                 
                 <div class="download-results" id="download-results">
@@ -516,22 +557,30 @@
                         <div class="download-option">
                             <h4>MP4 - 1080p</h4>
                             <p>High Quality</p>
-                            <button class="btn" style="margin-top: 10px;">Download</button>
+                            <button class="btn btn-success download-format-btn" data-format="mp4-1080" style="margin-top: 10px;">
+                                <i class="fas fa-download"></i> Download
+                            </button>
                         </div>
                         <div class="download-option">
                             <h4>MP4 - 720p</h4>
                             <p>Medium Quality</p>
-                            <button class="btn" style="margin-top: 10px;">Download</button>
+                            <button class="btn btn-success download-format-btn" data-format="mp4-720" style="margin-top: 10px;">
+                                <i class="fas fa-download"></i> Download
+                            </button>
                         </div>
                         <div class="download-option">
                             <h4>MP4 - 480p</h4>
                             <p>Standard Quality</p>
-                            <button class="btn" style="margin-top: 10px;">Download</button>
+                            <button class="btn btn-success download-format-btn" data-format="mp4-480" style="margin-top: 10px;">
+                                <i class="fas fa-download"></i> Download
+                            </button>
                         </div>
                         <div class="download-option">
                             <h4>MP3</h4>
                             <p>Audio Only</p>
-                            <button class="btn" style="margin-top: 10px;">Download</button>
+                            <button class="btn btn-success download-format-btn" data-format="mp3" style="margin-top: 10px;">
+                                <i class="fas fa-download"></i> Download
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -544,7 +593,7 @@
         <div class="container">
             <div class="section-title">
                 <h2>Why Choose All Downloader?</h2>
-                <p>Our platform offers the best downloading experience with these amazing features</p>
+                <p>Our platform offers the best YouTube downloading experience with these amazing features</p>
             </div>
             
             <div class="features-grid">
@@ -553,7 +602,7 @@
                         <i class="fas fa-bolt"></i>
                     </div>
                     <h3>Fast Downloads</h3>
-                    <p>Download videos at the highest possible speed with our optimized servers.</p>
+                    <p>Download YouTube videos at the highest possible speed with our optimized servers.</p>
                 </div>
                 
                 <div class="feature-card">
@@ -604,14 +653,14 @@
         <div class="container">
             <div class="section-title">
                 <h2>How It Works</h2>
-                <p>Downloading videos has never been easier. Just follow these simple steps</p>
+                <p>Downloading YouTube videos has never been easier. Just follow these simple steps</p>
             </div>
             
             <div class="steps">
                 <div class="step">
                     <div class="step-number">1</div>
-                    <h3>Copy Video URL</h3>
-                    <p>Go to your favorite platform and copy the video URL from the address bar.</p>
+                    <h3>Copy YouTube URL</h3>
+                    <p>Go to YouTube and copy the video URL from the address bar.</p>
                 </div>
                 
                 <div class="step">
@@ -683,7 +732,7 @@
             <div class="footer-content">
                 <div class="footer-column">
                     <h3>All Downloader</h3>
-                    <p>The fastest and most reliable video downloader for all major platforms. Free, secure, and easy to use.</p>
+                    <p>The fastest and most reliable YouTube video downloader. Free, secure, and easy to use.</p>
                 </div>
                 
                 <div class="footer-column">
@@ -745,15 +794,6 @@
                     case 'linkedin':
                         urlInput.placeholder = 'https://www.linkedin.com/posts/...';
                         break;
-                    case 'facebook':
-                        urlInput.placeholder = 'https://www.facebook.com/watch/?v=...';
-                        break;
-                    case 'twitter':
-                        urlInput.placeholder = 'https://twitter.com/.../status/...';
-                        break;
-                    case 'tiktok':
-                        urlInput.placeholder = 'https://www.tiktok.com/@.../video/...';
-                        break;
                 }
             });
         });
@@ -761,13 +801,23 @@
         // Download Button Functionality
         const downloadBtn = document.getElementById('download-btn');
         const downloadResults = document.getElementById('download-results');
+        const videoPreview = document.getElementById('video-preview');
+        const videoThumbnail = document.getElementById('video-thumbnail');
+        const videoTitle = document.getElementById('video-title');
+        const videoDuration = document.getElementById('video-duration');
         
         downloadBtn.addEventListener('click', () => {
             const urlInput = document.getElementById('video-url');
             const url = urlInput.value.trim();
             
             if (!url) {
-                alert('Please enter a valid URL');
+                alert('Please enter a valid YouTube URL');
+                return;
+            }
+            
+            // Validate YouTube URL
+            if (!url.includes('youtube.com') && !url.includes('youtu.be')) {
+                alert('Please enter a valid YouTube URL');
                 return;
             }
             
@@ -775,10 +825,28 @@
             downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
             downloadBtn.disabled = true;
             
-            // Simulate processing time
+            // Extract video ID from URL
+            let videoId = '';
+            if (url.includes('youtube.com')) {
+                videoId = url.split('v=')[1];
+                const ampersandPosition = videoId.indexOf('&');
+                if (ampersandPosition !== -1) {
+                    videoId = videoId.substring(0, ampersandPosition);
+                }
+            } else if (url.includes('youtu.be')) {
+                videoId = url.split('youtu.be/')[1];
+            }
+            
+            // Simulate processing time and show video preview
             setTimeout(() => {
                 downloadBtn.innerHTML = '<i class="fas fa-download"></i> Download Video';
                 downloadBtn.disabled = false;
+                
+                // Show video preview
+                videoThumbnail.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+                videoTitle.textContent = 'Sample YouTube Video Title';
+                videoDuration.textContent = 'Duration: 3:45';
+                videoPreview.style.display = 'block';
                 
                 // Show download options
                 downloadResults.style.display = 'block';
@@ -788,16 +856,70 @@
             }, 2000);
         });
         
+        // Format Download Buttons
+        const formatButtons = document.querySelectorAll('.download-format-btn');
+        formatButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const format = this.getAttribute('data-format');
+                const urlInput = document.getElementById('video-url');
+                const url = urlInput.value.trim();
+                
+                // Extract video ID from URL
+                let videoId = '';
+                if (url.includes('youtube.com')) {
+                    videoId = url.split('v=')[1];
+                    const ampersandPosition = videoId.indexOf('&');
+                    if (ampersandPosition !== -1) {
+                        videoId = videoId.substring(0, ampersandPosition);
+                    }
+                } else if (url.includes('youtu.be')) {
+                    videoId = url.split('youtu.be/')[1];
+                }
+                
+                // Create a temporary download link
+                const downloadLink = document.createElement('a');
+                downloadLink.href = `https://www.youtube.com/watch?v=${videoId}`;
+                downloadLink.download = `youtube_video_${videoId}.${format.includes('mp4') ? 'mp4' : 'mp3'}`;
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+                
+                // Show success message
+                alert(`Your download has started! The video will be saved as ${format.includes('mp4') ? 'MP4' : 'MP3'} format.`);
+            });
+        });
+        
         // Mobile Menu Toggle
         const mobileMenu = document.querySelector('.mobile-menu');
         const navLinks = document.querySelector('.nav-links');
         
         mobileMenu.addEventListener('click', () => {
-            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            navLinks.classList.toggle('active');
         });
         
         // Update year in copyright
         document.querySelector('.copyright p').innerHTML = `&copy; ${new Date().getFullYear()} All Downloader. All rights reserved.`;
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    navLinks.classList.remove('active');
+                }
+            });
+        });
     </script>
 </body>
 </html>
